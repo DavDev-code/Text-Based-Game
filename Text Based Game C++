@@ -1,0 +1,868 @@
+#include <iostream>
+#include <string> 
+#include <time.h>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+	srand((unsigned int)time(NULL));
+	string name;
+	int hp = 100, magic = 1, armor, lake, mysman, torch;
+	cout << "Type your name: ";
+	getline(cin, name);
+	system("cls");
+	cout << "Welcome " << name << ", you heard murmurs about a great treasure in a dungeon near you, but you have no idea if it's true or not. It could be life changing wealth so you decide to explore it.\nWhen presented with an option, type the corresponding number.";
+	cout << "\nYour starting HP is 100 and Magic 1. Depending on your choices, they can both increase or decrease.";
+	cout << "\nWhat type of armor do you want to wear?\n1. Knight Armor(+20 HP, -1 magic)\n2. Mage Armor(-20 HP, +1 Magic)\n";
+	cin >> armor;
+	while (armor < 1 || armor>2) {
+		cout << "\nWhat type of armor do you want to wear?\n1. Knight Armor(+20 HP, -1 magic)\n2. Mage Armor(-20 HP, +1 Magic)\n";
+		cin >> armor;
+	}
+	if (armor == 1) {
+		cout << "You picked the Knight armor.";
+		hp += 20;
+		magic--;
+	}
+	else if (armor == 2) {
+		cout << "You picked the Mage armor.";
+		hp -= 20;
+		magic++;
+	}
+	cout << "\nYour HP is " << hp << " and Magic " << magic << ".\n";
+	system("pause");
+	system("cls");
+	cout << "\nBefore entering the dungeon, you see what looks like an enchanted lake. Do you enter?\n1. Yes\n2. No\n";
+	cin >> lake;
+	while (lake < 1 || lake>2) {
+		cout << "\n1. Yes\n2. No\n";
+		cin >> lake;
+	}
+	if (lake == 1) {
+		hp += 10;
+		magic++;
+		cout << "\nAs you enter the lake you feel your vitality increase. +10 Health, +1 Magic. (" << hp << " HP, " << magic << " Magic)\n";
+	}
+	if (lake == 2) {
+		cout << "\nYou walk past the lake never knowing if it was a trap or not.\n";
+	}
+	system("pause");
+	system("cls");
+	cout << "\nYou approach the dungeon but there is someone guarding the gates.\nHow will you approach the situation?";
+	int guardhp = 1, actiona;
+	while (guardhp > 0) {
+		cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+		cin >> actiona;
+		while (actiona < 1 || actiona>4) {
+			cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+			cin >> actiona;
+		}
+		switch (actiona) {
+		case 1:
+			cout << "\nYour weapon phases through the guard.";
+			break;
+		case 2:
+			hp -= 10;
+			cout << "\nYou feel something sapping your energy. -10 HP (" << hp << " HP)";
+			break;
+		case 3:
+			cout << "\nYou try talking to the guard but they don't respond.";
+			break;
+		case 4:
+			cout << "\nYou run past the guard but they don't move. Was it a mirage?\n";
+			guardhp--;
+			break;
+		}
+		if (hp <= 0) {
+			cout << "\nGame Over!";
+			return 0;
+		}
+	}
+	system("pause");
+	system("cls");
+	cout << "\nAs you walk through the main hall, a mysterious man approaches you and offers you a trade\n'Give me a piece of your armor and I'll give you this spare torch I have.'\nWill you accept?\n";
+	cout << "1. Yes (-20 HP)\n2. No\n";
+	cin >> mysman;
+	while (mysman < 1 || mysman>2) {
+		cout << "\n1. Yes (-20 HP)\n2. No\n";
+		cin >> mysman;
+	}
+	if (mysman == 1 && hp>20) {
+		hp -= 20;
+		torch = 1;
+		cout << "-20 HP (" << hp << " HP).\n";
+		cout << "'Thank you for doing business with me. Remember to always watch your back. I have my own business to attend. I'm guessing you have yours too. The man hands you the torch and proceeds forward.\n";
+	}
+	else {
+		if (hp <= 20) {
+			cout << "You don't have enough HP, therefore you can't get the torch.\n";
+		}
+		torch = 0;
+		cout << "'You know how dangerous this place is, right? I don't want to say you'll regret it but you probably will.' The man proceeds forward without saying anything else.\n";
+	}
+	system("pause");
+	system("cls");
+	cout << "You take in the sights. You see some big statues, but you have no idea who or what they represent\n";
+	system("pause");
+	cout << "Out of nowhere, a weird figure appears in front of you. It kinda looks like a human but also kinda doesn't.\nHow will you approach the situation?";
+	int fighp = 50, figatt=0, actionb, coin, talka;
+	while (fighp> 0) {
+		cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+		cin >> actionb;
+		while (actionb < 1 || actionb>4) {
+			cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+			cin >> actionb;
+		}
+		switch (actionb) {
+		case 1:
+			cout << "\nYou charge up an attack against the figure.\n";
+			if (magic < 3) {
+				cout << "You deal 15 damage!\n";
+				fighp -= 15;
+			}
+			else if (magic >= 3) {
+				cout << "You deal 10 damage!\n";
+				fighp -= 10;
+			}
+			if (fighp > 0) {
+				figatt = 1 + rand() % 4;
+			}
+			break;
+		case 2:
+			cout << "\nYou use magic to attack the figure.\n";
+			if (magic >= 3) {
+				cout << "Your magic spell deals 20 damage!\n";
+				fighp -= 20;
+			}
+			else if (magic == 2) {
+				cout << "Your magic spell deals 15 damage!\n";
+				fighp -= 15;
+			}
+			else if (magic == 1) {
+				cout << "Your magic spell deals 10 damage!\n";
+				fighp -= 10;
+			}
+			else if (magic <= 0) {
+				cout << "You have no magic profficiency. Your attack completely misses!\n";
+			}
+			if (fighp > 0) {
+				figatt = 1 + rand() % 4;
+			}
+			break;
+		case 3:
+			cout << "\n1. Reason\n2. Threaten\n";
+			cin >> talka;
+			while (talka < 1 || talka>2) {
+				cout << "\n1. Reason\n2. Threaten\n";
+				cin >> talka;
+			}
+			if (talka == 1) {
+				cout<< "You try to reason with the figure, but it doesn't seem to work.";
+			}
+			else if (talka == 2) {
+				cout << "You threaten the figure. You don't know if it has any effect.\n'You think I feel threatened by a puny mortal like you?'\n";
+				if (hp >= 100) {
+					fighp -= 10;
+				}
+			}
+			if (fighp > 0) {
+				figatt = 1 + rand() % 4;
+			}
+			break;
+		case 4:
+			cout << "\nYou try to escape from the figure but it won't let you.\n";
+			if (fighp > 0) {
+				figatt = 1 + rand() % 4;
+			}
+			break;
+		}
+		switch (figatt) {
+		case 1:
+			if (fighp > 0) {
+				hp -= 5;
+				cout << "\nThe figure attacks you but it barely clips your armor -5 HP. (" << hp << " HP)";
+			}
+			break;
+		case 2:
+			if (fighp > 0) {
+				hp -= 10;
+				cout << "\nThe figure attacks you! -10 HP. (" << hp << " HP)";
+			}
+			break;
+		case 3:
+			if (fighp > 0) {
+				cout << "\nThe figure charges up an attack.";
+				coin = 1 + rand() % 2;
+				if (coin == 1) {
+					hp -= 20;
+					cout << "\nAnd connects! -20 HP. (" << hp << " HP)";
+				}
+				else if (coin == 2) {
+					cout << "\nAnd missses!";
+				}
+			}
+			break;
+		case 4:
+			if (fighp > 0) {
+				cout << "\nThe figure tries attacking you but misses!";
+			}
+			break;
+		}
+		if (hp <= 0) {
+			cout << "\nGame Over!";
+			return 0;
+		}
+	}
+	cout << "\nThe figure looks defeated and disappears. It drops a health potion\n";
+	system("pause");
+	system("cls");
+	int potionc, potion=1;
+	cout << "The health potion will give you +20 HP. Will you drink it now or keep it for later?\n";
+	cout << "1. Drink\n2. Add to invetory\n";
+	cin >> potionc;
+	while (potionc < 1 || potionc>2) {
+		cout << "\n1. Drink\n2. Add to invetory\n";
+		cin >> potionc;
+	}
+	if (potionc == 1) {
+		hp += 20;
+		potion--;
+		cout << "You drank the potion and gained 20 HP. (" << hp << " HP)\n";
+	}
+	else if (potionc == 2) {
+		cout << "The health potion was added to your inventory\n";
+	}
+	system("pause");
+	system("cls");
+	cout << "You proceed to the next hall wondering what that creature was.\n";
+	system("pause");
+	cout << "You take a few steps forward and suddenly the hall starts to get really dark.\n";
+	if (torch == 1) {
+		cout << "You take out the torch the mysterious man gave you and light it up.\n";
+		system("pause");
+		cout << "You proceed safely to the end of the hall, and enter the next one.\n";
+	}
+	else if (torch == 0) {
+		cout << "The torch the mysterious man offered you could have been really useful right now.\n";
+		system("pause");
+		hp -= 40;
+		cout << "You feel something hurting you in the dark, but you have no idea what it is, -40 HP. (" << hp << " HP)\n";
+		if (hp <= 0) {
+			cout << "\nGame Over!";
+			return 0;
+		}
+		system("pause");
+		magic -= 2;
+		cout << "Your anxiety is getting the better of you, -2 Magic. (" << magic << " Magic)";
+		system("pause");
+		cout << "You manage to reach the end of the hall, glad you are still alive\n";
+	}
+	system("pause");
+	system("cls");
+	int hole;
+	cout << "As you enter the next hall you see a hole near you\nWill you enter it?\n";
+	cout << "1. Yes\n2. No\n";
+	cin >> hole;
+	while (hole < 1 || hole>2) {
+		cout << "\n1. Yes\n2. No\n";
+		cin >> hole;
+	}
+	if (hole == 1) {
+		cout << "You enter the hole hoping to find something useful inside.\n";
+		system("pause");
+		cout << "The hole wasn't steep enough to kill you, but it was steep enough to break your legs!\n";
+		system("pause");
+		cout << "As you lay on the floor helpless you come to a sudden realization. Why did you think this was a good idea?\n";
+		system("pause");
+		cout << "You wish for something or someone out there in this world to answer your prayers.\n";
+		system("pause");
+		cout << "\nGame Over!";
+		return 0;
+	}
+	if (hole == 2) {
+		cout << "You walk past the hole thinking it's not worth the risk\n";
+	}
+	system("pause");
+	system("cls");
+	cout << "As you proceed forward you see someone in the near distance. It looks like the mysterious man from before.\n";
+	system("pause");
+	cout << "You decide to approach him.\n";
+	system("pause");
+	cout << "'So we meet again. ";
+	if (torch == 1) {
+		cout << "'I hope that torch I gave you proved to be useful.'\n";
+		system("pause");
+		cout << "You nod in agreement.\n";
+		system("pause");
+		cout << "'Glad I could help.'\n'";
+	}
+	else if (torch == 0) {
+		cout << "'I hope you din't get in too much trouble.'\n";
+		system("pause");
+		cout << "You explain that you felt you would die in the dark hall.\n";
+		system("pause");
+		cout << "'Like I said, this place can be very dangerous. Glad you're still alive though.'\n";
+	}
+	cout << "'Anyways, I happen to have this little amulet right here. How about another trade?'\n";
+	system("pause");
+	cout << "You decide to question the man's intentions and identity.\n";
+	system("pause");
+	cout << "'None of these matter. What really matters is we both help each other out.'\n";
+	cout << "How will you approach the situation?\n";
+	int actionc, i=0, mysmanhp=1, actiond, amulet;
+	while (mysmanhp > 0) {
+		cout << "1. Attack him\n2. Question further\n3. Change the subject\n";
+		cin >> actionc;
+		while (actionc < 1 || actionc>3) {
+			cout << "1. Attack him\n2. Question further\n3. Change the subject\n";
+			cin >> actionc;
+		}
+		switch (actionc) {
+		case 1:
+			hp -= 25;
+			cout << "'You'll rue the day you did this!' The man slashes at you and runs away, -25 HP (" << hp << " HP)";
+			if (hp <= 0) {
+				cout << "\nGame Over!";
+				return 0;
+			}
+			mysmanhp--;
+			break;
+		case 2:
+			cout << "'If there's one thing I can promise you, it's that if you help me I will help you too.'\n";
+			i++;
+			if (i == 3) {
+				system("cls");
+				cout << "'You know what. You keep questioning my identity and intentions, while I have asked you about neither of these things.'\n";
+				system("pause");
+				cout << "'Go on your merry way so I can go on mine.'";
+				mysmanhp--;
+			}
+			break;
+		case 3:
+			cout << "You decide to not push further.\n";
+			system("pause");
+			cout << "'So about the trade. Are you interested?'\n";
+			cout << "1. Yes (-20 HP)\n2. No\n";
+			cin >> actiond;
+			while (actiond < 1 || actiond>2) {
+				cout << "1. Yes(-20 HP)\n2. No\n";
+				cin >> actiond;
+			}
+			if (actiond == 1) {
+				hp -= 20;
+				amulet = 1;
+				cout << "-20 HP (" << hp << " HP).";
+				cout << "'Thanks for doing business with me. I hope this amulet proves useful.'\n";
+				system("pause");
+				magic++;
+				cout << "The amulet boosts your Magic. +1 Magic (" << magic << " Magic)\n";
+				mysmanhp--;
+			}
+			if (actiond == 2) {
+				amulet = 0;
+				cout << "'Well that's a shame. It could be really useful, but it could also help me.\n Goodbye and be careful!\n";
+				mysmanhp--;
+			}
+			break;
+		}
+	}
+	system("pause");
+	system("cls");
+	cout << "You proceed forward.\n";
+	if (potion == 1) {
+		cout << "Do you want to drink your health potion now or keep it in your inventorty?\n";
+		cout << "1. Yes(+20 HP)\n2. No\n";
+		cin >> potionc;
+		while (potionc < 1 || potionc>2) {
+			cout << "\n1. Drink(+20 HP)\n2. Add to invetory\n";
+			cin >> potionc;
+		}
+		if (potionc == 1) {
+			hp += 20;
+			potion--;
+			cout << "You drink the potion and gain 20 HP. (" << hp << " HP)\n";
+		}
+		else if (potionc == 2) {
+			cout << "You keep the health potion in your inventory.\n";
+		}
+	}
+	system("pause");
+	system("cls");
+	cout << "You see 12 identical statues of a knight. You notice a knight wearing the same armor depicted on the statues.\n";
+	system("pause");
+	cout << "You ask her if she needs any help\n";
+	system("pause");
+	cout << "She immediatly becomes hostile!\nHow will you approach the situation?\n";
+	int knighthp = 100, knightatt = 0, actione, coinb, talkb;
+	while (knighthp > 0) {
+		cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+		cin >> actione;
+		while (actione < 1 || actione>4) {
+			cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+			cin >> actione;
+		}
+		switch (actione) {
+		case 1:
+			cout << "\nYou charge up an attack against the knight.\n";
+			if (magic < 3) {
+				cout << "You deal 15 damage!\n";
+				knighthp -= 15;
+			}
+			else if (magic >= 3) {
+				cout << "You deal 10 damage!\n";
+				knighthp -= 10;
+			}
+			if (knighthp > 0) {
+				knightatt = 1 + rand() % 4;
+			}
+			break;
+		case 2:
+			cout << "\nYou use magic to attack the knight.\n";
+			if (magic == 4) {
+				cout << "Your magic spell deals 25 damage!\n";
+				knighthp -= 25;
+			}
+			else if (magic == 3) {
+				cout << "Your magic spell deals 15 damage!\n";
+				knighthp -= 15;
+			}
+			else if (magic == 2) {
+				cout << "Your magic spell deals 10 damage!\n";
+				knighthp -= 10;
+			}
+			else if (magic == 1) {
+				cout << "Your magic spell deals 5 damage!\n";
+				knighthp -= 5;
+			}
+			else if (magic <= 0) {
+				cout << "You have no magic profficiency. Your attack completely misses!\n";
+			}
+			if (knighthp > 0) {
+				knightatt = 1 + rand() % 4;
+			}
+			break;
+		case 3:
+			cout << "\n1. Reason\n2. Threaten\n";
+			cin >> talkb;
+			while (talkb < 1 || talkb>2) {
+				cout << "\n1. Reason\n2. Threaten\n";
+				cin >> talkb;
+			}
+			if (talkb == 1) {
+				cout << "You try to reason with the knight.\n'Leave this dungeon while you still can! Before you go insane!'\nThe knight charges at you.\n";
+			}
+			else if (talkb == 2) {
+				cout << "You threaten the knight.\n'You shouldn't have come here!'\n";
+			}
+			if (knighthp > 0) {
+				knightatt = 1 + rand() % 4;
+			}
+			break;
+		case 4:
+			cout << "\nYou try to escape the fight but the knight statues start moving and block your way!\n";
+			if (knighthp > 0) {
+				knightatt = 1 + rand() % 4;
+			}
+			break;
+		}
+		switch (knightatt) {
+		case 1:
+			if (knighthp > 0) {
+				hp -= 10;
+				cout << "\nThe knight attacks you but the sword barely clips your armor -10 HP. (" << hp << " HP)";
+			}
+			break;
+		case 2:
+			if (knighthp > 0) {
+				hp -= 20;
+				cout << "\nThe knight swings her sword at you -20 HP. (" << hp << " HP)";
+			}
+			break;
+		case 3:
+			if (knighthp > 0) {
+				cout << "\nThe knight charges up an attack.";
+				coinb = 1 + rand() % 4;
+				if (coinb == 1) {
+					hp -= 35;
+					cout << "\nAnd connects! -35 HP. (" << hp << " HP)";
+				}
+				else if (coinb == 2) {
+					hp -= 25;
+					cout << "\nAnd connects! -25 HP. (" << hp << " HP)";
+				}
+				else if (coinb == 3) {
+					hp += 10;
+					cout << "\nThe sword connects with your armor, but for some reason you feel a healing touch.  +10 HP. (" << hp << " HP)";
+				}
+				else if (coinb == 4) {
+					cout << "\nAnd misses!";
+				}
+			}
+			break;
+		case 4:
+			if (knighthp > 0) {
+				cout << "\nThe knight tries to attack you but misses!";
+			}
+			break;
+		}
+		if (hp <= 0) {
+			cout << "\nGame Over!";
+			return 0;
+		}
+	}
+	cout << "\nThe knight lays on the ground defeated.\n";
+	system("pause");
+	system("cls");
+	cout << "You have a feeling that the knight wasn't acting on her own accord.\n";
+	system("pause");
+	cout << "You wish things were different.\n";
+	system("pause");
+	hp += 30;
+	magic++;
+	cout << "\nYou feel your vitality increase. +30 Health, +1 Magic. (" << hp << " HP, " << magic << " Magic)\n";
+	system("pause");
+	system("cls");
+	cout << "As you enter the next room, you have a weird feeling that you are getting closer to the treasure.\n";
+	system("pause");
+	cout << "Suddenly a blue portal appears in fron of you!\n";
+	system("pause");
+	cout<< "A soft female voice starts speaking to you.\n";
+	cout << "'So, you made it here. Not many creatures can boast about that.'\n";
+	system("pause");
+	cout << "'I guess you're wondering where that portal leads. To tell you the truth, I'm not sure.'\n";
+	system("pause");
+	cout << "You doubt the woman is telling you the truth.\n";
+	system("pause");
+	cout << "How will you approach the situation?\n";
+	int voicehp = 3, talkc;
+	while (voicehp > 0) {
+		cout << "\n1. Attack\n2. Question\n3. Threaten\n";
+		cin >> talkc;
+		while (talkc < 1 || talkc>3) {
+			cout << "\n1. Attack\n2. Question\n3. Threaten\n";
+			cin >> talkc;
+		}
+		switch (talkc) {
+		case 1:
+			cout << "'What are you attacking exactly? Can you even see me?'\n";
+			voicehp--;
+			break;
+		case 2:
+			if (magic == 5) {
+				cout << "You question the woman further.\n";
+				system("pause");
+				cout << "'So you really want to know where that portal leads. Okay, I guess I can tell you.'\n";
+				system("pause");
+				cout << "'This portal will take you to a different dimension, very similar to yours.\nIf you decide to enter it, forget about the treasure. But, if you leave this dimension, you will also leave this dimension's problems behind.\n";
+				cout << "Your chances of having a better life are higher, but they are not guaranteed'\n";
+				system("pause");
+				cout << "In your head, you wonder how the woman knows about your life struggles.\n";
+				system("pause");
+				cout << "'How do I know about your life struggles? No normal person is coming to this dungeon willingly.'\n";
+				voicehp -= 3;
+			}
+			else if (magic < 5) {
+				cout << "You question the woman further.\n";
+				system("pause");
+				cout << "'It could take you to a better place, or a worse one. It could lead you to your end. Such mysterious things portals are.'\n";
+				voicehp--;
+			}
+			break;
+		case 3:
+			cout << "'You have no idea who you're threatening. We're not even from the same dimension. Your threats have no effect on me.'\n";
+			voicehp--;
+			break;
+		}
+	}
+	cout << "\nThe woman's voice starts fading away, until you can no longer hear it.\n";
+	system("pause");
+	system("cls");
+	int portal;
+	cout << "Will you enter the portal?\n1. Yes\n2. No\n";
+	cin >> portal;
+	while (portal < 1 || portal>2) {
+		cout << "\n1. Yes\n2. No\n";
+		cin >> portal;
+	}
+	if (portal == 1) {
+		cout << "You enter the portal\n";
+		system("pause");
+		system("cls");
+		cout << "You start feeling dizzy and pass out.\n";
+		system("pause");
+		cout << "You wake up on a grass field. You have no idea where you are\n";
+		system("pause");
+		cout << "You see a small village nearby and hear 2 villagers talking.\nThey speak the same language as you ,but their accent makes it hard for you to understand what they're saying.\n";
+		system("pause");
+		cout << "You feel very calm, as if a big burden was lifted from you.\n";
+		system("pause");
+		cout << "You don't know if this is real or not, but it feels real to you.\n";
+		system("pause");
+		cout << "You walk towards the village to get some help and information.\n";
+		system("pause");
+		cout << "The End.\nThank you for playing!";
+		return 0;
+	}
+	else if (portal == 2) {
+		cout << "You decide to not enter the portal and continue your quest for the treasure.\n";
+	}
+	system("pause");
+	system("cls");
+	cout << "You see something peeking from behind a rock.\nYou decide to inspect it.\n";
+	system("pause");
+	cout << "You see a creature that has a weird face, but otherwise resembles a big dog.\n";
+	cout << "How will you approach the situation?";
+	int doghp = 1, dogawr = 1, actionf, coinc, dog;
+	while (doghp > 0 && dogawr >0) {
+		cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+		cin >> actionf;
+		while (actionf < 1 || actionf>4) {
+			cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+			cin >> actionf;
+		}
+		switch (actionf) {
+		case 1:
+			cout << "You attack the creature.\n";
+			dog = 0;
+			doghp--;
+			break;
+		case 2:
+			cout << "You use magic to attack the creature.\n";
+			dog = 0;
+			doghp--;
+			break;
+		case 3:
+			cout << "You try to calm down the creature.\n";
+			system("pause");
+			cout << "And it works! The creature was never hostile towards you.\n";
+			dog = 1;
+			system("pause");
+			cout << "It looks like the creature wants to join you.\nYou keep it as your trusty companion.\n";
+			dogawr--;
+			break;
+		case 4:
+			cout << "\nYou try to run past the dog.\n";
+			coinc = 1 + rand() % 10;
+			if (coinc == 1 || coinc == 2) {
+				cout << "And succeed!\n";
+				dog = 0;
+				dogawr--;
+			}
+			else {
+				cout << "But the creature blocks your way!\n";
+			}
+			break;
+		}
+	}
+	if (doghp <= 0) {
+		cout << "The creature lays down defeated.\n";
+		system("pause");
+		cout << "As you look at its carcass, you feel like you made a horible mistake.\n";
+		system("pause");
+		cout << "It never tried to attack you.\n";
+	}
+	cout << "You rush towards the door leading to the next hall.\n";
+	system("pause");
+	system("cls");
+	cout << "That's it, the final hall. The treasure must be here.\n";
+	if (potion == 1) {
+		hp += 20;
+		cout << "You drink your spare health potion. +20 HP (" << hp << " HP)\n";
+		potion--;
+	}
+	system("pause");
+	cout << "On your left you see a chest. It has a hole shaped exactly like the amulet the mysterious man offered you.\n";
+	system("pause");
+	if (amulet == 1) {
+		hp += 40;
+		cout << "You insert the amulet in the hole. -1 Magic.\n";
+		system("pause");
+		cout << "The chest contains a scroll with ancient spells written on it\nYou use one of them to increase you vitality. +40 HP, +1 Magic\n";
+		cout << "Your HP is " << hp << " and Magic " << magic << ".\n";
+	}
+	else if (amulet == 0) {
+		cout << "You didn't take the amulet from the mysterious man and you can't find another way to open it.\n";
+	}
+	system("pause");
+	cout << "You enter what looks like a throne room.\n";
+	system("pause");
+	system("cls");
+	cout << "You see a man wearing a crown sitting on the throne.\nYou walk towards the man.\n";
+	system("pause");
+	cout << "'Oh? You're approaching me? Instead of running away, you come right to me?'\n";
+	system("pause");
+	cout << "The words of the man don't phase you.\n";
+	system("pause");
+	cout << "You came here for the great treasure? Sorry to break the news to you but it doesn't exist\n";
+	system("pause");
+	cout << "You thought you would get out of here with the treasure, but instead you're going to die in here!\n";
+	system("pause");
+	cout << "Prepare to meet your end!\n";
+	system("pause");
+	int bosshp = 150, bossatt = 0, faction, fcoin, ftalk;
+	if (dog == 1) {
+		bosshp = 100;
+		cout << "Your companion comes to your asssistance.\n";
+	}
+	while (bosshp > 0) {
+		cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+		cin >> faction;
+		while (faction < 1 || faction>4) {
+			cout << "\n1. Attack\n2. Magic Attack\n3. Talk\n4. Run\n";
+			cin >> faction;
+		}
+		switch (faction) {
+		case 1:
+			cout << "\nYou charge up an attack against the man.\n";
+			if (magic < 4) {
+				cout << "You deal 20 damage!\n";
+				bosshp -= 20;
+			}
+			else if (magic >= 4) {
+				cout << "You deal 5 damage!\n";
+				bosshp -= 5;
+			}
+			if (bosshp > 0) {
+				bossatt = 1 + rand() % 5;
+			}
+			break;
+		case 2:
+			cout << "\nYou use magic to attack the man.\n";
+			if (magic == 5) {
+				cout << "Your magic spell deals 25 damage!\n";
+				bosshp -= 25;
+			}
+			else if (magic == 4) {
+				cout << "Your magic spell deals 20 damage!\n";
+				bosshp -= 20;
+			}
+			else if (magic == 3) {
+				cout << "Your magic spell deals 15 damage!\n";
+				bosshp -= 15;
+			}
+			else if (magic == 2) {
+				cout << "Your magic spell deals 10 damage!\n";
+				bosshp -= 10;
+			}
+			else if (magic == 1) {
+				cout << "Your magic spell deals 5 damage!\n";
+				bosshp -= 5;
+			}
+			else if (magic <= 0) {
+				cout << "You have no magic profficiency. Your attack completely misses!\n";
+			}
+			if (bosshp > 0) {
+				bossatt = 1 + rand() % 5;
+			}
+			break;
+		case 3:
+			cout << "\n1. Reason\n2. Threaten\n";
+			cin >> ftalk;
+			while (ftalk < 1 || ftalk>2) {
+				cout << "\n1. Reason\n2. Threaten\n";
+				cin >> ftalk;
+			}
+			if (ftalk == 1) {
+				cout << "You try to reason with the man.\n'Whatever you say won't change anything. Come and fight me!'";
+			}
+			else if (ftalk == 2) {
+				hp += 10;
+				cout << "You threaten the man. His knowledge of your feats in the dungeon unnerve him\nYou gain some HP\n";
+			}
+			if (bosshp > 0) {
+				bossatt = 1 + rand() % 5;
+			}
+			break;
+		case 4:
+			cout << "'There is no turning back!'\n";
+			if (bosshp > 0) {
+				bossatt = 1 + rand() % 5;
+			}
+			break;
+		}
+		switch (bossatt) {
+		case 1:
+			if (bosshp > 0) {
+				hp -= 15;
+				cout << "\nThe  man swings his sword at you. You avoid heavy damage -15 HP. (" << hp << " HP)";
+			}
+			break;
+		case 2:
+			if (bosshp > 0) {
+				hp -= 30;
+				cout << "\nThe man attacks you! -30 HP. (" << hp << " HP)";
+			}
+			break;
+		case 3:
+			if (bosshp > 0) {
+				hp -= 10;
+				cout << "\nThe man uses a magic attack!\n";
+				if (magic == 5) {
+					cout << "You negate the attack and deflect it back to him dealing 10 damage!\n";
+					bosshp -= 10;
+				}
+				else if (magic == 4) {
+					hp -= 15;
+					cout << "You negate some of the damage from the attack. -15 HP. (" << hp << " HP)\n";
+				}
+				else if (magic == 3) {
+					hp -= 25;
+					cout << "You negate some of the damage from the attack. -25 HP. (" << hp << " HP)\n";
+				}
+				else if (magic <= 2) {
+					hp -= 40;
+					cout << "You take heavy damage from the attack. -40 HP. (" << hp << " HP)\n";
+				}
+			}
+			break;
+		case 4:
+			if (bosshp > 0) {
+				cout << "\nThe man charges up an attack.";
+				fcoin = 1 + rand() % 2;
+				if (fcoin == 1) {
+					hp -= 40;
+					cout << "\nAnd connects! -40 HP. (" << hp << " HP)";
+				}
+				else if (fcoin == 2) {
+					cout << "\nAnd missses!";
+				}
+			}
+			break;
+		case 5:
+			if (bosshp > 0) {
+				cout << "\nThe man tries attacking you but misses!";
+			}
+			break;
+		}
+		if (hp <= 0) {
+			cout << "\nGame Over!";
+			return 0;
+		}
+	}
+	cout << "\nThe man collapses on the floor.\n";
+	system("pause");
+	cout << "You ask him what's going on in this dungeon but he passes away before he can utter a word.\n";
+	system("pause");
+	system("cls");
+	cout << "You search the room hoping to find some treasure.\n";
+	system("pause");
+	cout << "You don't find any\n";
+	system("pause");
+	cout << "Maybe the man was right. There wasn't any treasure.\n";
+	system("pause");
+	cout << "But even if there was would it really help you accomplish what you had hoped for?\n";
+	system("pause");
+	if (dog == 1) {
+		cout << "It seems like there is something binding your companion to this dungeon. It can't join you.";
+	}
+	cout << "You leave the dungeon feeling like a completely different person.\n";
+	system("pause");
+	cout << "Was it worth it?\nWhat now?\nWhat even was this place?\n";
+	system("pause");
+	cout << "These are the questions you have to ponder.\n";
+	system("pause");
+	cout << "The End.\nThank you for playing!";
+
+	return 0;
+}
